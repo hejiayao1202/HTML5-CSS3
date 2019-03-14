@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>表单</title>
+		<style>
+			.word{
+				color:red;
+			}
+			.two{
+				margin-top:20px;
+			}
+			.all{
+				margin:0 5px 0 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>毕业生信息</h1>
+		<form id="testform" method="GET" >
+			<fieldset style="width:500px;">
+				<legend class="word">
+					学生信息
+				</legend>
+				姓&nbsp;&nbsp;名<input class="all" type="text" name="name" autofocus required placeholder="请输入姓名"><span class="word">*</span><br/>
+				学&nbsp;&nbsp;号<input class="all" type="text" name="idnumber" required placeholder="请输入学号"><span class="word">*</span><br/>
+				手&nbsp;&nbsp;机<input class="all" type="tel" name="tel" required placeholder="请输入手机号"><span class="word">*</span><br/>
+				邮&nbsp;&nbsp;箱<input class="all" type="email" name="email" required placeholder="请输入邮箱地址"><span class="word">*</span><br/>
+			</fieldset>
+			<fieldset class="two" style="width:500px;">
+				<legend class="word">
+					录取情况
+				</legend>
+				录取学校<input class="all" type="search" name="school" list="schools" required>
+				<datalist id="schools">
+					<option>河北师范大学</option>
+					<option>河北大学</option>
+					<option>北京邮电大学</option>
+					<option>天津大学</option>
+					<option>北京航空航天大学</option>
+				</datalist>
+				<br/>
+				入学成绩<input class="all" type="text" name="score" required><br/>
+				入学时间<input class="all" type="date" name="date" required><br/>
+			</fieldset>
+			<input class="two" type="submit">
+		</form>
+	</body>
+</html>
