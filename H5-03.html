@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>刮刮卡</title>
+    <style>
+        #canvas{
+            border:1px solid gray;
+            position: absolute;
+            left:50px;
+            top:50px;
+        }
+        .award{
+            width:390px;
+            height:200px;
+            border:1px solid gray;
+            margin: 50px;
+            background:url(webimg/award.png) no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="award"></div>
+	<canvas id="canvas" width="400" height="200">/canvas>
+<script>
+	var c=document.getElementById("canvas");
+	var ctx=c.getContext("2d");
+
+    //画遮盖层
+    ctx.beginPath();
+    ctx.fillStyle="#7b777a";
+    ctx.fillRect(0,0,400,200);
+    ctx.closePath();
+
+    //画出涂抹区域
+    function drawCtx(x,y){
+        ctx.globalCompositeOperation="destination-out";
+        ctx.beginPath();
+        ctx.arc(x,y,20,0,2*Math.PI,true);
+        ctx.fill();
+        ctx.closePath();
+    }
+    //鼠标点击时，变透明
+    c.onclick=function(e){
+        var x=e.clientX-c.offsetLeft;//offsetLeft相对于父元素得到左边距
+        var y=e.clientY-c.offsetTop;
+        drawCtx(x,y);
+    }
+    //鼠标点击并拖动时，变透明
+    c.onmousedown=function(){
+        document.onmousemove=function(e){
+            var x=e.clientX-c.offsetLeft;//offsetLeft相对于父元素得到左边距
+            var y=e.clientY-c.offsetTop;
+            drawCtx(x,y);
+        }
+        document.onmouseup=function(){
+            clearCtx();
+            document.onmousemove=null;
+        }
+    }
+
+    //当涂抹区域为85%时，清除涂层
+    function clearCtx(){
+        var ctxdata=ctx.getImageData(0,0,400,200);
+        var data=ctxdata.data;
+        var clear=0;
+        for(var i=3;i<data.length;i=i+4){
+            if(data[i]===0)
+                clear++;
+        }
+        var m=clear/(data.length/4)*100;
+        if(m>85){
+            ctx.clearRect(0,0,400,200);
+        }
+    }
+    
+</script>
+</body>
+</html>
